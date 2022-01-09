@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
 import store from "./store";
-// Vue.use(VueRouter);
 
 import Home from "./views/Home.vue";
 import Login from "./views/Login.vue";
@@ -8,6 +7,7 @@ import Register from "./views/Register.vue";
 
 // mode: 'history',
 // linkActiveClass: 'active',
+// https://next.router.vuejs.org/zh/guide/advanced/navigation-guards.html
 const routes = [
   {
     path: "/",
@@ -26,16 +26,14 @@ const routes = [
   },
 ];
 
-const router = createRouter({ history: createWebHistory(), routes });
-
-// });
+const router = createRouter({ history: createWebHistory(), routes: routes });
 
 router.beforeEach((to, from, next) => {
-  to.matched.some((record) => {
+  const requiresAuth = to.matched.some((record) => {
     console.log(record);
     return record.meta.requiresAuth;
   });
-  if (to.matched.some((record) => record.meta.requiresAuth)) {
+  if (requiresAuth) {
     if (!store.state.loggedIn) {
       next({
         path: "/login",
