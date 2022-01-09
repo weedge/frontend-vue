@@ -45,7 +45,7 @@ const register = async () => {
       return router.push("/admin/");
     else {
       return router.push({
-        name: "user",
+        name: "userOrders",
         params: { id: store.state.user.id },
       });
     }

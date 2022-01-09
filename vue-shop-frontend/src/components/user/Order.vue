@@ -1,0 +1,48 @@
+<script setup lang="ts">
+import { mapState, useStore } from "vuex";
+import { computed } from "vue";
+
+const store = useStore();
+const getUserOrders = () => store.dispatch("getUserOrders", store.state.user.id);
+const userorders = computed(() => store.state.userorders);
+getUserOrders();
+</script>
+
+<template>
+    <div class="text-center banner">
+        <div class="container p-5">
+            <div class="p-5">
+                <h1>用户订单</h1>
+            </div>
+        </div>
+        <div class="container pb-5">
+            <div class="row pb-5">
+                <div class="col-md-6">
+                    <counter title="总订单数目" :value="0"></counter>
+                    <br />
+                </div>
+
+                <div class="col-md-6">
+                    <counter title="总共花费" :value="0" symbol="¥"></counter>
+                </div>
+                <br />
+            </div>
+        </div>
+        <br />
+        <br />
+
+        <div class="container pt-5 pb-5">
+            <h5 class="pb-5">全部订单</h5>
+            <div class="row pb-5">
+                <div class="col-md-12">
+                    <div class="card">
+                        <order-table :orders="userorders" :isAdmin="false" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<style scoped>
+</style>

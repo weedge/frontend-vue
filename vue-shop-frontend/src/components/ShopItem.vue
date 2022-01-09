@@ -34,13 +34,13 @@ export default {
                 }}
             </small>
             <span>
-                <h5>Event Date:</h5>
+                <h5>创建时间:</h5>
                 <h6 class="authBtnInner pb-3">{{ item.date ?? "" }}</h6>
             </span>
             <router-link
                 :to="{ name: 'item', params: { id: item.id } }"
                 class="btn btn-primary customBtn"
-            >View More</router-link>
+            >查看更多</router-link>
         </div>
         <br />
     </div>

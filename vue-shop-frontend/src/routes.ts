@@ -4,6 +4,8 @@ import store from "./store";
 import Home from "./views/Home.vue";
 import Login from "./views/Login.vue";
 import Register from "./views/Register.vue";
+import UserOrder from "./components/user/Order.vue";
+import ShopItemInfo from "./views/ShopItemInfo.vue";
 
 // mode: 'history',
 // linkActiveClass: 'active',
@@ -23,6 +25,29 @@ const routes = [
     path: "/register",
     name: "register",
     component: Register,
+  },
+  {
+    path: "/items/:id",
+    name: "shopItem",
+    component: ShopItemInfo,
+  },
+  {
+    path: "/user/:id/orders",
+    name: "userOrders",
+    component: UserOrder,
+    meta: { requiresAuth: true },
+    beforeEnter(to, from, next) {
+      if (
+        store.getters["isUser"] &&
+        parseInt(store.state.user.id) === parseInt(to.params.id)
+      ) {
+        next();
+      } else {
+        next({
+          name: "login",
+        });
+      }
+    },
   },
 ];
 
