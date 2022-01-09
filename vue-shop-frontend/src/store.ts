@@ -1,11 +1,16 @@
 import { createStore } from "vuex";
+import OrderRepository from "./repositories/OrderRepository";
 import Repository from "./repositories/RepositoryFactory";
+import ShopItemRepository from "./repositories/ShopItemRepository";
 const AuthRepository = Repository.get("auth");
 
 const store = createStore({
     state: {
-        user: [],
+        user: {},
+        token: "",
         loggedIn: false,
+        items: [],
+        userorders: [],
     },
 
     actions: {
@@ -27,6 +32,15 @@ const store = createStore({
         async register({ commit }, payload) {
             return await AuthRepository.register(payload);
         },
+
+        async getUserOrders({ commit }, id) {
+            commit("STORE_GET_USER_ORDERS", await OrderRepository.getUserOrders(id));
+        },
+
+        async getItems({ commit }) {
+            commit("STORE_GET_ITEMS", await ShopItemRepository.getItems());
+        },
+
     },
 
     mutations: {
@@ -47,14 +61,26 @@ const store = createStore({
                 localStorage.removeItem("token");
                 localStorage.removeItem("user");
                 state.user = {};
-                state.token = null;
-                state.insights = null;
+                state.token = "";
                 state.loggedIn = false;
+                //state.insights = null;
             }
+        },
+        STORE_GET_ITEMS: (state, response) => {
+            const { data } = response;
+            state.items = data;
+        },
+        STORE_GET_USER_ORDERS: (state, response) => {
+            const { data } = response;
+            state.userorders = data;
         },
     },
 
     getters: {
+        getEvent: (state) => (id) => {
+            return state.items.find((item) => item.id == id);
+        },
+
         isAdmin: (state) => {
             return state.user.is_admin;
         },

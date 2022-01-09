@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { mapState, useStore } from "vuex";
 import { computed } from "vue";
+import ItemTable from "../ItemTable.vue";
+import Counter from "../Counter.vue";
 
 const store = useStore();
 const getUserOrders = () => store.dispatch("getUserOrders", store.state.user.id);
@@ -18,7 +20,7 @@ getUserOrders();
         <div class="container pb-5">
             <div class="row pb-5">
                 <div class="col-md-6">
-                    <counter title="总订单数目" :value="0"></counter>
+                    <Counter title="总订单数目" :value="0"></Counter>
                     <br />
                 </div>
 
@@ -36,7 +38,7 @@ getUserOrders();
             <div class="row pb-5">
                 <div class="col-md-12">
                     <div class="card">
-                        <order-table :orders="userorders" :isAdmin="false" />
+                        <ItemTable :orders="userorders" :isAdmin="false" />
                     </div>
                 </div>
             </div>
