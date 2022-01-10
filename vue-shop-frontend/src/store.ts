@@ -11,9 +11,14 @@ const store = createStore({
         loggedIn: false,
         items: [],
         userorders: [],
+        item: {},
     },
 
     actions: {
+        async register({ commit }, payload) {
+            commit("STORE_REGISTER_USER", await AuthRepository.register(payload));
+        },
+
         async login({ commit }, payload) {
             commit("STORE_LOGGED_IN_USER", await AuthRepository.login(payload));
         },
@@ -29,12 +34,12 @@ const store = createStore({
             return false;
         },
 
-        async register({ commit }, payload) {
-            return await AuthRepository.register(payload);
+        async order({ commit }, payload) {
+            commit("STORE_USER_ORDER", await OrderRepository.order(payload));
         },
 
-        async getUserOrders({ commit }, id) {
-            commit("STORE_GET_USER_ORDERS", await OrderRepository.getUserOrders(id));
+        async getUserOrders({ commit }, uid) {
+            commit("STORE_GET_USER_ORDERS", await OrderRepository.getUserOrders(uid));
         },
 
         async getItems({ commit }) {
@@ -45,9 +50,24 @@ const store = createStore({
             commit("STORE_SEARCH_ITEMS", await ShopItemRepository.search(keyword));
         },
 
+        async getItem({ commit }, id) {
+            commit("STORE_GET_ITEM", await ShopItemRepository.getItem(id));
+        },
     },
 
     mutations: {
+        STORE_REGISTER_USER: (state, response) => {
+            const { data } = response;
+
+            if (data) {
+                localStorage.setItem("token", data.token);
+                localStorage.setItem("user", data.user);
+                state.user = data.user;
+                state.token = data.token;
+                state.loggedIn = true;
+            }
+        },
+
         STORE_LOGGED_IN_USER: (state, response) => {
             const { data } = response;
 
@@ -71,6 +91,11 @@ const store = createStore({
             }
         },
 
+        STORE_GET_ITEM: (state, response) => {
+            const { data } = response;
+            state.item = data;
+        },
+
         STORE_GET_ITEMS: (state, response) => {
             const { data } = response;
             state.items = data;
@@ -85,18 +110,20 @@ const store = createStore({
             const { data } = response;
             state.userorders = data;
         },
+
+        STORE_USER_ORDER: (state, response) => {
+            const { data } = response;
+            console.log(data)
+        },
     },
 
     getters: {
-        getEvent: (state) => (id) => {
+        getItem: (state) => (id) => {
             return state.items.find((item) => item.id == id);
         },
 
-        isAdmin: (state) => {
-            return state.user.is_admin;
-        },
-        isUser: (state) => {
-            return !state.user.is_admin;
+        getUserOrder: (state) => (orderId) => {
+            return state.userorders.find((item) => item.orderId == orderId);
         },
     },
 

@@ -17,19 +17,6 @@ const textPrefix = (text, length, suffix = null) => {
 const viewItem = (id) => {
   return router.push({ name: "item", params: { id } });
 };
-const updateItem = (id) => {
-  return router.push({ path: "/admin/add", query: { item: id } });
-};
-
-const deleteItem = async (id) => {
-  try {
-    await store.dispatch("deleteItem", id);
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-//return { textPrefix, viewItem, updateItem, deleteItem };
 </script>
 
 <template>
@@ -53,13 +40,6 @@ const deleteItem = async (id) => {
         <td>{{ item.date }}</td>
         <td>
           <button @click="viewItem(item.id)" type="button" class="btn btn-primary">查看</button>
-          <button @click="updateItem(item.id)" type="button" class="btn btn-info" v-if="isAdmin">更新</button>
-          <button
-            @click="deleteItem(item.id)"
-            type="button"
-            class="btn btn-danger"
-            v-if="isAdmin"
-          >删除</button>
         </td>
       </tr>
     </tbody>

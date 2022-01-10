@@ -1,26 +1,14 @@
-<script lang="ts">
-import { defineComponent, toRefs } from 'vue'
-
-export default {
-    name: "ShopItem",
-    props: {
-        item: {
-            type: Object,
-            default: () => { },
-        },
-    },
-
-    setup(props) {
-        const textPrefix = (text, length, suffix = null) => {
-            if (text.length > length) {
-                return text.substring(0, length) + suffix;
-            } else {
-                return text;
-            }
-        };
-        return { textPrefix };
-    },
-}
+<script setup lang="ts">
+import { ref } from 'vue'
+defineProps<{ item: string }>()
+//const count = ref(0)
+const textPrefix = (text: string, length: number, suffix = null) => {
+    if (text.length > length) {
+        return text.substring(0, length) + suffix;
+    } else {
+        return text;
+    }
+};
 </script>
 
 <template>
@@ -35,10 +23,10 @@ export default {
             </small>
             <span>
                 <h5>创建时间:</h5>
-                <h6 class="authBtnInner pb-3">{{ item.date ?? "" }}</h6>
+                <h6 class="authBtnInner pb-3">{{ item.created_at ?? "" }}</h6>
             </span>
             <router-link
-                :to="{ name: 'item', params: { id: item.id } }"
+                :to="{ name: 'shopItem', params: { id: item.id } }"
                 class="btn btn-primary customBtn"
             >查看更多</router-link>
         </div>

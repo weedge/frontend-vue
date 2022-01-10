@@ -8,7 +8,7 @@ import { object, string, ref as yupRef } from "yup";
 // validate
 const schema = object({
   email: string().required().email(),
-  password: string().required().min(8),
+  password: string().required().min(3),
   password_confirmation: string().oneOf(
     [yupRef("password"), null],
     "Passwords must match"
@@ -41,14 +41,10 @@ const register = async () => {
       email: email.value,
       password: password.value,
     });
-    if (store.state.loggedIn && store.getters["isAdmin"])
-      return router.push("/admin/");
-    else {
-      return router.push({
-        name: "userOrders",
-        params: { id: store.state.user.id },
-      });
-    }
+    return router.push({
+      name: "userOrders",
+      params: { id: store.state.user.id },
+    });
   } catch (err) {
     //todo: upload crash log
     console.log(err);

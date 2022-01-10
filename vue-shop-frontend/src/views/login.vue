@@ -31,14 +31,10 @@ const login = async () => {
       email: email.value,
       password: password.value,
     });
-    if (store.state.loggedIn && store.getters["isAdmin"])
-      return router.push("/admin/");
-    else {
-      return router.push({
-        name: "userOrders",
-        params: { id: store.state.user.id },
-      });
-    }
+    return router.push({
+      name: "userOrders",
+      params: { id: store.state.user.id },
+    });
   } catch (err) {
     console.log(err);
   }

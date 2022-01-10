@@ -1,23 +1,17 @@
-<script lang="ts">
-import ShopItem from './ShopItem.vue'
-import { defineComponent, computed } from 'vue'
-import { mapState, useStore } from "vuex";
+<script setup lang="ts">
+//import ShopItem from './ShopItem.vue'
+import { computed } from 'vue'
+import { useStore } from "vuex";
 
-export default defineComponent({
-    name: "ShopItems",
-    comments: { ShopItem },
-    setup() {
-        const store = useStore();
-        return {
-            items: computed(() => store.state.items),
-        };
-    },
-})
+const store = useStore();
+const dispatchItems = () => store.dispatch("getItems");
+const items = computed(() => store.state.items);
+dispatchItems();
 </script>
 
 <template>
     <div class="row pb-5">
-        <ShopItem v-for="(item, i) in items" :key="i" :event="item" />
+        <ShopItem v-for="(item, i) in items" :key="i" :item="item"></ShopItem>
     </div>
 </template>
 

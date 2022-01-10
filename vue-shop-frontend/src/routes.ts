@@ -37,10 +37,7 @@ const routes = [
     component: UserOrder,
     meta: { requiresAuth: true },
     beforeEnter(to, from, next) {
-      if (
-        store.getters["isUser"] &&
-        parseInt(store.state.user.id) === parseInt(to.params.id)
-      ) {
+      if (parseInt(store.state.user.id) === parseInt(to.params.id)) {
         next();
       } else {
         next({
