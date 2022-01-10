@@ -1,6 +1,6 @@
 import Http from "./clients/AxiosClient";
 const orderv1 = "/shop/api/v1";
-const resource= "/orders";
+const resource = "/orders";
 
 export default {
   order(payload: any) {
@@ -10,6 +10,6 @@ export default {
     return Http.get(`${orderv1}${resource}/${orderId}`);
   },
   getUserOrders(uid: string | number) {
-    return Http.get(`${orderv1}/users/${uid}/${resource}`);
+    return Http.get(`${orderv1}/users/${uid}${resource}`);
   },
 };
