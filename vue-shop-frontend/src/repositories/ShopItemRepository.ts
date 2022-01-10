@@ -1,6 +1,6 @@
 import Http from "./clients/AxiosClient";
 const shopv1 = "/shop/api/v1";
-const resource = "/item";
+const resource = "/items";
 
 export default {
   getItems() {

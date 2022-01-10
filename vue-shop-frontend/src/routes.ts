@@ -4,7 +4,7 @@ import store from "./store";
 import Home from "./views/Home.vue";
 import Login from "./views/Login.vue";
 import Register from "./views/Register.vue";
-import UserOrder from "./components/user/Order.vue";
+import UserOrder from "./views/user/Order.vue";
 import ShopItemInfo from "./views/ShopItemInfo.vue";
 
 // mode: 'history',

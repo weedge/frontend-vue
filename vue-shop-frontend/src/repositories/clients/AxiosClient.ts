@@ -2,7 +2,7 @@ import axios from "axios";
 
 //const baseDomain = "http://127.0.0.1:3333";
 const baseDomain = "http://127.0.0.1:2021";
-const baseURL = `${baseDomain}/api/v1`;
+const baseURL = `${baseDomain}`;
 
 const httpsClient = axios.create({
   baseURL,

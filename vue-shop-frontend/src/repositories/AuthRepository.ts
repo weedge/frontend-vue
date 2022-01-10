@@ -1,5 +1,5 @@
 import Http from "./clients/AxiosClient";
-const resource = "/auth";
+const resource = "/api/v1/auth";
 
 export default {
   async login(payload: any) {

@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { mapState, useStore } from "vuex";
 import { computed } from "vue";
-import ItemTable from "../ItemTable.vue";
-import Counter from "../Counter.vue";
+import ItemTable from "../../components/ItemTable.vue";
+import Counter from "../../components/Counter.vue";
 
 const store = useStore();
 const getUserOrders = () => store.dispatch("getUserOrders", store.state.user.id);
@@ -25,7 +25,7 @@ getUserOrders();
                 </div>
 
                 <div class="col-md-6">
-                    <counter title="总共花费" :value="0" symbol="¥"></counter>
+                    <Counter title="总共花费" :value="0" symbol="¥"></Counter>
                 </div>
                 <br />
             </div>
