@@ -41,6 +41,10 @@ const store = createStore({
             commit("STORE_GET_ITEMS", await ShopItemRepository.getItems());
         },
 
+        async search({ commit }, keyword) {
+            commit("STORE_SEARCH_ITEMS", await ShopItemRepository.search(keyword));
+        },
+
     },
 
     mutations: {
@@ -66,10 +70,17 @@ const store = createStore({
                 //state.insights = null;
             }
         },
+
         STORE_GET_ITEMS: (state, response) => {
             const { data } = response;
             state.items = data;
         },
+
+        STORE_SEARCH_ITEMS: (state, response) => {
+            const { data } = response;
+            state.items = data;
+        },
+
         STORE_GET_USER_ORDERS: (state, response) => {
             const { data } = response;
             state.userorders = data;

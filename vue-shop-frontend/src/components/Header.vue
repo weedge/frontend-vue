@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { useStore } from "vuex";
-const store = useStore();
+import { useRouter } from "vue-router";
+const store = useStore()
+const router = useRouter()
 
 const logout = async () => {
   await store.dispatch("logout");
@@ -9,6 +11,13 @@ const logout = async () => {
 const redirect = async () => {
   console.log('redirect')
   //await store.dispatch("logout");
+};
+
+const search = async () => {
+  await store.dispatch("search");
+  return router.push({
+    name: "home",
+  });
 };
 
 const loggedIn = store.state.loggedIn
@@ -90,7 +99,7 @@ const isAdmin = store.getters["isAdmin"]
     </ul>
     <form class="form-inline" v-if="!loggedIn">
       <input class="form-control mr-sm-2" type="search" placeholder="商品名称" aria-label="Search" />
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">查找</button>
+      <button @submit.prevent="search" class="btn btn-outline-success my-2 my-sm-0" type="submit">查找</button>
     </form>
   </nav>
 </template>
