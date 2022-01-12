@@ -27,12 +27,8 @@ getUserOrders();
                 <div class="col-md-6">
                     <Counter title="总共花费" :value="0" symbol="¥"></Counter>
                 </div>
-                <br />
             </div>
         </div>
-        <br />
-        <br />
-
         <div class="container pt-5 pb-5">
             <h5 class="pb-5">全部订单</h5>
             <div class="row pb-5">

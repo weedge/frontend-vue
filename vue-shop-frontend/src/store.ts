@@ -69,6 +69,7 @@ const store = createStore({
                 state.token = data.token;
                 state.loggedIn = true;
             }
+            console.log(state.user)
         },
 
         STORE_LOGGED_IN_USER: (state, response) => {
@@ -76,12 +77,13 @@ const store = createStore({
 
             if (data) {
                 localStorage.setItem("token", data.token);
-                localStorage.setItem("user", data.user);
+                localStorage.setItem("user", JSON.stringify(data.user));
                 localStorage.setItem("loggedIn", "1");
                 state.user = data.user;
                 state.token = data.token;
                 state.loggedIn = true;
             }
+            console.log(localStorage.getItem("user"))
         },
 
         STORE_LOGGED_OUT_USER: (state, response) => {
@@ -130,9 +132,12 @@ const store = createStore({
     },
 
     getters: {
-        getUid: (state) => () => {
+        getUid: (state) => {
             if (!state.user.id) {
-                state.user = localStorage.getItem("user")
+                const jsonUser = localStorage.getItem("user")
+                if (jsonUser) {
+                    state.user = JSON.parse(jsonUser)
+                }
             }
             return state.user.id
         },

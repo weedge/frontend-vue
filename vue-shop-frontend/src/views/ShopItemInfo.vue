@@ -16,7 +16,6 @@ const buy = async () => {
   try {
     if (loggedIn) {
       const uid = store.state.user.id ? store.state.user.id : store.getters["getUid"]
-      //console.log(uid)
       await store.dispatch("order", {
         itemId: route.params.id,
         userId: uid,

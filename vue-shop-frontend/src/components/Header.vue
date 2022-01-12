@@ -6,6 +6,9 @@ const router = useRouter()
 
 const logout = async () => {
   await store.dispatch("logout");
+  return router.push({
+    name: "home",
+  });
 };
 
 const redirect = async () => {
