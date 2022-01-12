@@ -14,6 +14,9 @@ const store = createStore({
         items: [],
         userorders: [],
         item: {},
+        order: {},
+        totalOrderCn: 0,
+        totalCost: 0,
     },
 
     actions: {
@@ -69,7 +72,7 @@ const store = createStore({
                 state.token = data.token;
                 state.loggedIn = true;
             }
-            console.log(state.user)
+            //console.log(state.user)
         },
 
         STORE_LOGGED_IN_USER: (state, response) => {
@@ -83,7 +86,7 @@ const store = createStore({
                 state.token = data.token;
                 state.loggedIn = true;
             }
-            console.log(localStorage.getItem("user"))
+            //console.log(localStorage.getItem("user"))
         },
 
         STORE_LOGGED_OUT_USER: (state, response) => {
@@ -121,13 +124,15 @@ const store = createStore({
                 state.userorders.forEach(element => {
                     element.shopItem = data.itemMap[element.item_id]
                 });
-                console.log(state.userorders)
+                //console.log(state.userorders)
+                state.totalOrderCn = data.totalOrderCn ? data.totalOrderCn : 0
+                state.totalCost = data.totalCost ? data.totalCost : 0
             }
         },
 
         STORE_USER_ORDER: (state, response) => {
             const { data } = response;
-            console.log(data)
+            state.order = data;
         },
     },
 

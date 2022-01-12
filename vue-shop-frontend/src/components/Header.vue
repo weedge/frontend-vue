@@ -33,7 +33,7 @@ useForm({
 const { value: keyword } = useField("keyword");
 
 const search = async () => {
-  console.log('search', keyword.value)
+  //console.log('search', keyword.value)
   await store.dispatch("search", keyword.value);
   return router.push({
     name: "home",

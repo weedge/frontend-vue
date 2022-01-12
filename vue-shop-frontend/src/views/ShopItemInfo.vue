@@ -19,6 +19,7 @@ const buy = async () => {
       await store.dispatch("order", {
         itemId: route.params.id,
         userId: uid,
+        payAmount: item.value.price,
       });
       return router.push({
         name: "userOrders",
@@ -55,7 +56,7 @@ const buy = async () => {
               <small class="authBtnInner pb-3">{{ item.created_at }}</small>
               <hr />
               <span>价格:</span>
-              <small class="authBtnInner pb-3">${{ item.price }}</small>
+              <small class="authBtnInner pb-3">¥{{ item.price }}</small>
               <button type="submit" class="btn btn-primary customBtn">购买</button>
             </div>
           </form>
