@@ -10,6 +10,7 @@ export default {
     return Http.get(`${shopv1}${resource}/${id}`);
   },
   search(keyword: string) {
-    return Http.get(`${shopv1}/${resource}/search?q=${keyword}`);
+    console.log("keyword", keyword)
+    return Http.get(`${shopv1}${resource}/search?q=${keyword}`);
   },
 };

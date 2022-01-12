@@ -1,11 +1,16 @@
 <script setup lang="ts">
 import { useStore } from "vuex";
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
+import { useForm, useField } from "vee-validate";
+import { object, string } from "yup";
+
 const store = useStore()
 const router = useRouter()
+const route = useRoute()
 
 const logout = async () => {
   await store.dispatch("logout");
+  location.reload()
   return router.push({
     name: "home",
   });
@@ -16,14 +21,41 @@ const redirect = async () => {
   //await store.dispatch("logout");
 };
 
+// validate
+const schema = object({
+  keyword: string().required().trim(),
+});
+
+useForm({
+  validationSchema: schema,
+});
+
+const { value: keyword } = useField("keyword");
+
 const search = async () => {
-  await store.dispatch("search");
+  console.log('search', keyword.value)
+  await store.dispatch("search", keyword.value);
   return router.push({
     name: "home",
   });
 };
 
 const loggedIn = store.state.loggedIn || localStorage.getItem("loggedIn") == "1"
+const userOrders = async () => {
+  if (loggedIn) {
+    const uid = store.state.user.id ? store.state.user.id : store.getters["getUid"]
+    return router.push({
+      name: "userOrders",
+      params: { id: uid },
+    });
+  } else {
+    return router.push({
+      name: "login",
+      query: { redirect: route.fullPath },
+    });
+  }
+};
+
 
 </script>
 
@@ -40,6 +72,18 @@ const loggedIn = store.state.loggedIn || localStorage.getItem("loggedIn") == "1"
           aria-controls="pills-home"
           aria-selected="false"
         >主页</router-link>
+      </li>
+      <li class="nav-item" v-if="loggedIn">
+        <router-link
+          class="nav-link authBtn"
+          id="pills-contact-tab"
+          data-toggle="pill"
+          to
+          @click="userOrders"
+          role="tab"
+          aria-controls="pills-contact"
+          aria-selected="false"
+        >用户订单</router-link>
       </li>
       <li class="nav-item" v-if="!loggedIn">
         <router-link
@@ -76,9 +120,16 @@ const loggedIn = store.state.loggedIn || localStorage.getItem("loggedIn") == "1"
         >登出</router-link>
       </li>
     </ul>
-    <form class="form-inline">
-      <input class="form-control mr-sm-2" type="search" placeholder="商品名称" aria-label="Search" />
-      <button @submit.prevent="search" class="btn btn-outline-success my-2 my-sm-0" type="submit">查找</button>
+    <form class="form-inline" @submit.prevent="search">
+      <input
+        class="form-control mr-sm-2"
+        type="search"
+        name="keyword"
+        v-model="keyword"
+        placeholder="商品名称关键字"
+        aria-label="Search"
+      />
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">查找</button>
     </form>
   </nav>
 </template>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import ShopItems from "../components/ShopItems.vue";
+//import ShopItems from "../components/ShopItems.vue";
 </script>
 
 <template>

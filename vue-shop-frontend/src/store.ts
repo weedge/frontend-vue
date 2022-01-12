@@ -12,7 +12,7 @@ const store = createStore({
         token: "",
         loggedIn: false,
         items: [],
-        userorders: new Map(),
+        userorders: [],
         item: {},
     },
 
@@ -142,11 +142,11 @@ const store = createStore({
             return state.user.id
         },
 
-        getItem: (state) => (id) => {
+        getItem: (state) => (id: any) => {
             return state.items.find((item) => item.id == id);
         },
 
-        getUserOrder: (state) => (orderId) => {
+        getUserOrder: (state) => (orderId: any) => {
             return state.userorders.find((item) => item.orderId == orderId);
         },
     },

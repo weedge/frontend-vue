@@ -17,9 +17,7 @@ useForm({
 
 // No need to define rules for fields
 const { value: email, errorMessage: emailError } = useField("email");
-const { value: password, errorMessage: passwordError } = useField(
-  "password"
-);
+const { value: password, errorMessage: passwordError } = useField("password");
 
 // login action
 const user = ref({});

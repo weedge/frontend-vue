@@ -2,11 +2,7 @@
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
 
-//props: ["items", "isAdmin"],
-
-import { ref } from 'vue'
 defineProps<{ orders: any }>()
-//const count = ref(0)
 
 const router = useRouter();
 const store = useStore();
@@ -17,7 +13,7 @@ const textPrefix = (text: string, length: number, suffix = "") => {
     return text;
   }
 };
-const viewItem = (id) => {
+const viewItem = (id: string | number) => {
   return router.push({ name: "shopItem", params: { id } });
 };
 </script>
