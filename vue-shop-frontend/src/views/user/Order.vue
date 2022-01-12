@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { mapState, useStore } from "vuex";
-import { computed } from "vue";
-import ItemTable from "../../components/ItemTable.vue";
+import { computed, defineComponent } from "vue";
+//import ItemTable from "../../components/ItemTable.vue";
 import Counter from "../../components/Counter.vue";
 
 const store = useStore();
@@ -38,7 +38,7 @@ getUserOrders();
             <div class="row pb-5">
                 <div class="col-md-12">
                     <div class="card">
-                        <ItemTable :orders="userorders" :isAdmin="false" />
+                        <ItemTable :orders="userorders" />
                     </div>
                 </div>
             </div>

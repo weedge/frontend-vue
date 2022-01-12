@@ -8,7 +8,7 @@ import { useRouter } from "vue-router";
 // validate
 const schema = object({
   email: string().required().email(),
-  password: string().required().min(8),
+  password: string().required().min(3),
 });
 
 useForm({

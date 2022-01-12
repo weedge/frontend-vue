@@ -1,4 +1,6 @@
+import { useRoute } from "vue-router";
 import { createStore } from "vuex";
+import { string } from "yup";
 import OrderRepository from "./repositories/OrderRepository";
 import Repository from "./repositories/RepositoryFactory";
 import ShopItemRepository from "./repositories/ShopItemRepository";
@@ -10,7 +12,7 @@ const store = createStore({
         token: "",
         loggedIn: false,
         items: [],
-        userorders: [],
+        userorders: new Map(),
         item: {},
     },
 
@@ -62,6 +64,7 @@ const store = createStore({
             if (data) {
                 localStorage.setItem("token", data.token);
                 localStorage.setItem("user", data.user);
+                localStorage.setItem("loggedIn", "1");
                 state.user = data.user;
                 state.token = data.token;
                 state.loggedIn = true;
@@ -74,6 +77,7 @@ const store = createStore({
             if (data) {
                 localStorage.setItem("token", data.token);
                 localStorage.setItem("user", data.user);
+                localStorage.setItem("loggedIn", "1");
                 state.user = data.user;
                 state.token = data.token;
                 state.loggedIn = true;
@@ -84,6 +88,7 @@ const store = createStore({
             if (response) {
                 localStorage.removeItem("token");
                 localStorage.removeItem("user");
+                localStorage.removeItem("loggedIn");
                 state.user = {};
                 state.token = "";
                 state.loggedIn = false;
@@ -106,9 +111,16 @@ const store = createStore({
             state.items = data;
         },
 
+        // 客户端拼装数据,减少后端计算
         STORE_GET_USER_ORDERS: (state, response) => {
             const { data } = response;
-            state.userorders = data;
+            if (data) {
+                state.userorders = data.orders
+                state.userorders.forEach(element => {
+                    element.shopItem = data.itemMap[element.item_id]
+                });
+                console.log(state.userorders)
+            }
         },
 
         STORE_USER_ORDER: (state, response) => {
@@ -118,6 +130,13 @@ const store = createStore({
     },
 
     getters: {
+        getUid: (state) => () => {
+            if (!state.user.id) {
+                state.user = localStorage.getItem("user")
+            }
+            return state.user.id
+        },
+
         getItem: (state) => (id) => {
             return state.items.find((item) => item.id == id);
         },

@@ -36,15 +36,6 @@ const routes = [
     name: "userOrders",
     component: UserOrder,
     meta: { requiresAuth: true },
-    beforeEnter(to, from, next) {
-      if (parseInt(store.state.user.id) === parseInt(to.params.id)) {
-        next();
-      } else {
-        next({
-          name: "login",
-        });
-      }
-    },
   },
 ];
 
@@ -56,13 +47,14 @@ router.beforeEach((to, from, next) => {
     return record.meta.requiresAuth;
   });
   if (requiresAuth) {
-    if (!store.state.loggedIn) {
+    //console.log(store.state.loggedIn, localStorage.getItem("loggedIn"))
+    if (store.state.loggedIn || localStorage.getItem("loggedIn") == "1") {
+      next();
+    } else {
       next({
         path: "/login",
         query: { redirect: to.fullPath },
       });
-    } else {
-      next();
     }
   } else {
     next();

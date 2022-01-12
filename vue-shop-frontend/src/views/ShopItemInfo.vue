@@ -10,17 +10,20 @@ const dispatchItem = () => store.dispatch("getItem", route.params.id);
 const item = computed(() => store.state.item);
 dispatchItem();
 
+const loggedIn = store.state.loggedIn || localStorage.getItem("loggedIn") == "1"
 const router = useRouter();
 const buy = async () => {
   try {
-    if (store.state.loggedIn) {
+    if (loggedIn) {
+      const uid = store.state.user.id ? store.state.user.id : store.getters["getUid"]
+      //console.log(uid)
       await store.dispatch("order", {
         itemId: route.params.id,
-        userId: store.state.user.id,
+        userId: uid,
       });
       return router.push({
         name: "userOrders",
-        params: { id: store.state.user.id },
+        params: { id: uid },
       });
     } else {
       return router.push({

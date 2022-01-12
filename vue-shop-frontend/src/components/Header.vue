@@ -20,8 +20,7 @@ const search = async () => {
   });
 };
 
-const loggedIn = store.state.loggedIn
-const isAdmin = store.getters["isAdmin"]
+const loggedIn = store.state.loggedIn || localStorage.getItem("loggedIn") == "1"
 
 </script>
 
@@ -38,18 +37,6 @@ const isAdmin = store.getters["isAdmin"]
           aria-controls="pills-home"
           aria-selected="false"
         >主页</router-link>
-      </li>
-      <li class="nav-item" v-if="loggedIn">
-        <router-link
-          class="nav-link authBtn"
-          id="pills-contact-tab"
-          data-toggle="pill"
-          to
-          @click="redirect"
-          role="tab"
-          aria-controls="pills-contact"
-          aria-selected="false"
-        >购物系统</router-link>
       </li>
       <li class="nav-item" v-if="!loggedIn">
         <router-link
@@ -73,17 +60,6 @@ const isAdmin = store.getters["isAdmin"]
           aria-selected="false"
         >注册</router-link>
       </li>
-      <li class="nav-item" v-if="isAdmin">
-        <router-link
-          class="nav-link authBtn"
-          id="pills-contact-tab"
-          data-toggle="pill"
-          to="/admin/add"
-          role="tab"
-          aria-controls="pills-contact"
-          aria-selected="false"
-        >添加商品</router-link>
-      </li>
       <li class="nav-item" v-if="loggedIn">
         <router-link
           class="nav-link authBtn"
@@ -97,7 +73,7 @@ const isAdmin = store.getters["isAdmin"]
         >登出</router-link>
       </li>
     </ul>
-    <form class="form-inline" v-if="!loggedIn">
+    <form class="form-inline">
       <input class="form-control mr-sm-2" type="search" placeholder="商品名称" aria-label="Search" />
       <button @submit.prevent="search" class="btn btn-outline-success my-2 my-sm-0" type="submit">查找</button>
     </form>
