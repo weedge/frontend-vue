@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-defineProps<{ item: string }>()
+defineProps<{ item: any }>()
 //const count = ref(0)
-const textPrefix = (text: string, length: number, suffix = null) => {
+const textPrefix = (text: string, length: number, suffix = "") => {
     if (text.length > length) {
         return text.substring(0, length) + suffix;
     } else {

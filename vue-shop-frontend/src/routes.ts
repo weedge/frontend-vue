@@ -6,6 +6,7 @@ import Login from "./views/Login.vue";
 import Register from "./views/Register.vue";
 import UserOrder from "./views/user/Order.vue";
 import ShopItemInfo from "./views/ShopItemInfo.vue";
+import MenuVue from "./components/element-plus/Menu.vue";
 
 // mode: 'history',
 // linkActiveClass: 'active',

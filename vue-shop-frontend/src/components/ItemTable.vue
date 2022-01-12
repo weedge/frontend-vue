@@ -10,7 +10,7 @@ defineProps<{ orders: any }>()
 
 const router = useRouter();
 const store = useStore();
-const textPrefix = (text: string, length: number, suffix = null) => {
+const textPrefix = (text: string, length: number, suffix = "") => {
   if (text.length > length) {
     return text.substring(0, length) + suffix;
   } else {
