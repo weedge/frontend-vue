@@ -61,7 +61,7 @@ const userOrders = async () => {
 
 <template>
   <nav class="navbar navbar-light bg-light">
-    <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+    <ul class="nav nav-pills mb-3" role="tablist">
       <li class="nav-item">
         <router-link
           class="nav-link authBtn"
@@ -73,10 +73,32 @@ const userOrders = async () => {
           aria-selected="false"
         >主页</router-link>
       </li>
-      <li class="nav-item" v-if="loggedIn">
+      <li class="nav-item unLogIn">
         <router-link
           class="nav-link authBtn"
-          id="pills-contact-tab"
+          id="login"
+          data-toggle="pill"
+          to="/login"
+          role="tab"
+          aria-controls="pills-profile"
+          aria-selected="false"
+        >登录</router-link>
+      </li>
+      <li class="nav-item unLogIn">
+        <router-link
+          class="nav-link authBtn"
+          id="register"
+          data-toggle="pill"
+          to="/register"
+          role="tab"
+          aria-controls="pills-contact"
+          aria-selected="false"
+        >注册</router-link>
+      </li>
+      <li class="nav-item loggedIn">
+        <router-link
+          class="nav-link authBtn"
+          id="userOrders"
           data-toggle="pill"
           to
           @click="userOrders"
@@ -85,39 +107,17 @@ const userOrders = async () => {
           aria-selected="false"
         >用户订单</router-link>
       </li>
-      <li class="nav-item" v-if="!loggedIn">
+      <li class="nav-item loggedIn">
         <router-link
           class="nav-link authBtn"
-          id="pills-profile-tab"
-          data-toggle="pill"
-          to="/login"
-          role="tab"
-          aria-controls="pills-profile"
-          aria-selected="false"
-        >登录</router-link>
-      </li>
-      <li class="nav-item" v-if="!loggedIn">
-        <router-link
-          class="nav-link authBtn"
-          id="pills-contact-tab"
-          data-toggle="pill"
-          to="/register"
-          role="tab"
-          aria-controls="pills-contact"
-          aria-selected="false"
-        >注册</router-link>
-      </li>
-      <li class="nav-item" v-if="loggedIn">
-        <router-link
-          class="nav-link authBtn"
-          id="pills-contact-tab"
+          id="logout"
           data-toggle="pill"
           to
           @click="logout"
           role="tab"
           aria-controls="pills-contact"
           aria-selected="false"
-        >登出</router-link>
+        >退出</router-link>
       </li>
     </ul>
     <form class="form-inline" @submit.prevent="search">

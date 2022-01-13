@@ -47,6 +47,23 @@ router.beforeEach((to, from, next) => {
     console.log(record);
     return record.meta.requiresAuth;
   });
+  let logedIn = document.getElementsByClassName("loggedIn")
+  let unLogin = document.getElementsByClassName("unLogIn")
+  if (store.state.loggedIn || localStorage.getItem("loggedIn") == "1") {
+    for (var i = 0, len = logedIn.length | 0; i < len; i = i + 1 | 0) {
+      logedIn[i].hidden = false
+    }
+    for (var i = 0, len = unLogin.length | 0; i < len; i = i + 1 | 0) {
+      unLogin[i].hidden = true
+    }
+  } else {
+    for (var i = 0, len = logedIn.length | 0; i < len; i = i + 1 | 0) {
+      logedIn[i].hidden = true
+    }
+    for (var i = 0, len = unLogin.length | 0; i < len; i = i + 1 | 0) {
+      unLogin[i].hidden = false
+    }
+  }
   if (requiresAuth) {
     //console.log(store.state.loggedIn, localStorage.getItem("loggedIn"))
     if (store.state.loggedIn || localStorage.getItem("loggedIn") == "1") {
